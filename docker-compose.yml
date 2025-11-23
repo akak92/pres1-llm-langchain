@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:7.0
+    container_name: store-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: store
+    ports:
+      - "27025:27017"
+    volumes:
+      - ./Services/Mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - mongo_data:/data/db
+    networks:
+      - app-network
+
+volumes:
+  mongo_data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
