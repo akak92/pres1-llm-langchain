@@ -15,6 +15,25 @@ services:
     networks:
       - app-network
 
+  llm:
+    build:
+      context: ./Services/LLM
+      dockerfile: Dockerfile
+    container_name: llm-service
+    restart: unless-stopped
+    environment:
+      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT}
+      - AZURE_OPENAI_KEY=${AZURE_OPENAI_KEY}
+      - AZURE_OPENAI_DEPLOYMENT=${AZURE_OPENAI_DEPLOYMENT}
+      - AZURE_OPENAI_VERSION=${AZURE_OPENAI_VERSION}
+      - MONGO_URI=mongodb://mongo:27017/store
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
 volumes:
   mongo_data:
     driver: local

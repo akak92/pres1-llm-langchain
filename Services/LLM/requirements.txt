@@ -1,0 +1,29 @@
+# Core dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-dotenv==1.0.0
+
+# LangChain and Azure OpenAI
+langchain==0.1.0
+langchain-openai==0.0.2
+langchain-community==0.0.10
+openai==1.6.1
+
+# MongoDB
+pymongo==4.6.0
+motor==3.3.2
+
+# HTTP requests
+httpx==0.25.2
+requests==2.31.0
+
+# Data processing
+pydantic==2.5.1
+pydantic-settings==2.1.0
+
+# Logging and monitoring
+structlog==23.2.0
+
+# Testing (optional)
+pytest==7.4.3
+pytest-asyncio==0.21.1
