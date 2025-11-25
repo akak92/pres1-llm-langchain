@@ -35,8 +35,8 @@ async def initialize_services(app: FastAPI) -> None:
         db: AsyncIOMotorDatabase = mongo_client.store
         logger.info("✅ Conectado a MongoDB")
 
-        # --- LLM base (AzureChatOpenAI, sin bind_tools acá) ---
-        llm = AzureChatOpenAI(
+        # --- LLM base (AzureChatOpenAI) ---
+        llm: AzureChatOpenAI = AzureChatOpenAI(
             azure_deployment=settings.AZURE_OPENAI_DEPLOYMENT,
             openai_api_key=settings.AZURE_OPENAI_KEY,
             azure_endpoint=settings.AZURE_OPENAI_ENDPOINT,
@@ -49,7 +49,7 @@ async def initialize_services(app: FastAPI) -> None:
         tools = get_tools(db)
 
         # --- Prompt del agente ---
-        prompt = ChatPromptTemplate.from_messages(
+        prompt: ChatPromptTemplate = ChatPromptTemplate.from_messages(
             [
                 ("system", CHAT_SYSTEM_PROMPT),
                 # por ahora no usamos historial, pero dejamos el placeholder
@@ -73,7 +73,7 @@ async def initialize_services(app: FastAPI) -> None:
         # Guardar en app.state
         app.state.mongo_client = mongo_client
         app.state.db = db
-        app.state.llm = llm          # para health check si querés
+        app.state.llm = llm          # para health check
         app.state.tools = tools
         app.state.agent = agent_executor
 
@@ -121,7 +121,7 @@ async def root():
 @app.get("/health", response_model=HealthResponse)
 async def health_check():
     db: AsyncIOMotorDatabase = app.state.db
-    llm = app.state.llm
+    llm: AzureChatOpenAI = app.state.llm
 
     # --- Mongo ---
     try:
@@ -168,10 +168,10 @@ async def chat_with_AI(request: ChatRequest):
             }
         )
         # AgentExecutor devuelve un dict con key 'output'
-        final_text = result.get("output", "")
+        final_text: str = result.get("output", "")
 
         if not final_text:
-            final_text = "No pude generar una respuesta para esta consulta."
+            final_text: str = "No pude generar una respuesta para esta consulta."
 
         return ChatResponse(
             response=final_text,

@@ -1,7 +1,8 @@
 """Archivo de prompts del sistema para el servicio LLM"""
 
 # Prompt principal para chat general
-CHAT_SYSTEM_PROMPT = """Eres un asistente útil especializado en tecnología y productos electrónicos.
+
+CHAT_SYSTEM_PROMPT: str = """Eres un asistente útil especializado en tecnología y productos electrónicos.
 Responde de manera clara, concisa y profesional.
 
 Tienes acceso a herramientas:
