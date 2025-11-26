@@ -34,6 +34,20 @@ services:
     networks:
       - app-network
 
+  telegram-bot:
+    build:
+      context: ./Services/TelegramBot
+      dockerfile: Dockerfile
+    container_name: telegram-bot
+    restart: unless-stopped
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - LLM_API_URL=http://llm:8000/chat
+    depends_on:
+      - llm
+    networks:
+      - app-network
+
 volumes:
   mongo_data:
     driver: local
