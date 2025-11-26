@@ -28,7 +28,7 @@ services:
       - AZURE_OPENAI_VERSION=${AZURE_OPENAI_VERSION}
       - MONGO_URI=mongodb://mongo:27017/store
     ports:
-      - "8000:8000"
+      - "8008:8000"
     depends_on:
       - mongo
     networks:
