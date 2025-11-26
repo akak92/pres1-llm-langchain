@@ -10,7 +10,7 @@ from telegram.ext import (
 )
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-LLM_API_URL = os.getenv("LLM_API_URL", "http://llm:8000/chat")  # nombre del servicio docker
+LLM_API_URL = os.getenv("LLM_API_URL", "http://llm:8000/chat")
 
 
 async def call_llm_api(message: str) -> str:
@@ -21,7 +21,7 @@ async def call_llm_api(message: str) -> str:
         )
         resp.raise_for_status()
         data = resp.json()
-        # Tu /chat devuelve ChatResponse: { "response": "...", "model": "..." }
+        # Recordar: /chat devuelve ChatResponse: { "response": "...", "model": "..." }
         return data.get("response", "No pude generar una respuesta.")
 
 
